@@ -30,13 +30,8 @@ void DisplayIntArr(const unsigned int arr[], unsigned long long length){
         cout << "]" << '\n';
 }
 
-bool IsOverflow(unsigned int Num1, unsigned int Num2, char op){
-        if ( op != '+' && op != '-') { cout << "entered op was " << op << '\n' << '\n'; throw std::runtime_error("fucking retard put in a valid op next time (+ or -)"); }
-
-        unsigned int Result;
-
-        if (op == '+') { Result = Num1 + Num2; return Result < Num1; }
-        else { Result = Num1 - Num2; return Result > Num1; }
+bool IsOverflow(unsigned int Num1, unsigned int Num2){
+    return Num2 > UINT32_MAX - Num1; 
 }
 
 void CreateBigint(BigInt* NumberAddress){
