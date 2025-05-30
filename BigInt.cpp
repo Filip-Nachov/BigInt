@@ -3,18 +3,15 @@
 #include <iostream>
 #include <bits/stdc++.h>
 #include <stdbool.h>
+using std::cout;
 
-using namespace std;
-
-#define SIZEOFINT 4
-#define MAXINTSIZE 4294967295
-
-// we WILL be using little endian
+#define INT32_SIZE 4
+#define UINT32_SIZE 4294967295
 
 typedef struct{
         unsigned int *ArrOfInts;
         unsigned long long NumberOfDigits;
-        string representation;
+        std::string representation;
 } BigInt;
 
 char IntToDigt(int digit){
@@ -29,11 +26,11 @@ void DisplayIntArr(unsigned int arr[], unsigned long long length){
                         cout << ", ";
                 }
         }
-        cout << "]" << endl;
+        cout << "]" << '\n';
 }
 
 bool IsOverflow(unsigned int Num1, unsigned int Num2, char op){
-        if ( op != '+' && op != '-') { cout << "entered op was " << op << endl << endl; throw runtime_error("fucking retard put in a valid op next time (+ or -)"); }
+        if ( op != '+' && op != '-') { cout << "entered op was " << op << '\n' << '\n'; throw std::runtime_error("fucking retard put in a valid op next time (+ or -)"); }
 
         unsigned int Result;
 
@@ -42,7 +39,7 @@ bool IsOverflow(unsigned int Num1, unsigned int Num2, char op){
 }
 
 void CreateBigint(BigInt* NumberAddress){
-        NumberAddress->ArrOfInts = (unsigned int *) malloc(SIZEOFINT);
+        NumberAddress->ArrOfInts = (unsigned int *) malloc(INT32_SIZE);
         NumberAddress->NumberOfDigits = 1;
         NumberAddress->representation = "0";
         NumberAddress->ArrOfInts[0] = 0;
@@ -51,7 +48,7 @@ void CreateBigint(BigInt* NumberAddress){
 void SetBigIntVal(BigInt * PointerToNum, unsigned int Num){
         free(PointerToNum->ArrOfInts);
         PointerToNum->NumberOfDigits = 1;
-        PointerToNum->ArrOfInts = (unsigned int*) malloc(SIZEOFINT);
+        PointerToNum->ArrOfInts = (unsigned int*) malloc(INT32_SIZE);
         PointerToNum->ArrOfInts[0] = Num;
 }
 
@@ -77,11 +74,11 @@ void PrintBigintInfo(BigInt* NumberAddress){
         cout << "Integer array = ";
         DisplayIntArr(NumberAddress->ArrOfInts,NumberAddress->NumberOfDigits);
         cout << "\nInteger array pointer = " << NumberAddress->ArrOfInts;
-        cout << "\n\nNumberOfDigits = " << NumberAddress->NumberOfDigits << "\n\nREPRESENTATION = " << NumberAddress->representation << endl << endl;
+        cout << "\n\nNumberOfDigits = " << NumberAddress->NumberOfDigits << "\n\nREPRESENTATION = " << NumberAddress->representation << '\n' << '\n';
 }
 
 int main(){
-        cout << "DISCLAIMER, USING 'SetBigIntVal' ONLY WORKS WHEN YOU PASS IN AN UNSIGNED INTEGER THAT FITS IN AN UNSIGNED INTEGER" << endl << endl << endl;
+        cout << "DISCLAIMER, USING 'SetBigIntVal' ONLY WORKS WHEN YOU PASS IN AN UNSIGNED INTEGER THAT FITS IN AN UNSIGNED INTEGER" << '\n' << '\n' << '\n';
 
         BigInt TestNum;
         BigInt TestNum2;
@@ -91,25 +88,25 @@ int main(){
         SetBigIntVal(&TestNum,4250);
         SetBigIntVal(&TestNum2,4250);
 
-        cout << "Expected result is 0, result is " << CmpNums(TestNum,TestNum2) << endl;
+        cout << "Expected result is 0, result is " << CmpNums(TestNum,TestNum2) << '\n';
 
 
         SetBigIntVal(&TestNum,0);
         SetBigIntVal(&TestNum2,0);
 
 
-        cout << "Expected result is 0, result is " << CmpNums(TestNum,TestNum2) << endl;
+        cout << "Expected result is 0, result is " << CmpNums(TestNum,TestNum2) << '\n';
 
         SetBigIntVal(&TestNum,5);
         SetBigIntVal(&TestNum2,10);
         
-        cout << "Expected result is 1, result is " << CmpNums(TestNum,TestNum2) << endl;
+        cout << "Expected result is 1, result is " << CmpNums(TestNum,TestNum2) << '\n';
         
         SetBigIntVal(&TestNum,10);
         SetBigIntVal(&TestNum2,5);
 
 
-        cout << "Expected result is -1, result is " << CmpNums(TestNum,TestNum2) << endl;
+        cout << "Expected result is -1, result is " << CmpNums(TestNum,TestNum2) << '\n';
         
 
 
