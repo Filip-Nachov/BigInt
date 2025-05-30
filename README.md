@@ -1,7 +1,7 @@
-yall know how you struggle with overflow errors in C and Cpp, i try to fix that with arbitrary precision integers, negative numbers? NOT SUPPORTED, floats? NOT SUPPORED, subtraction? NOT SUPPORTED
+# BigInt
 
-you can have positive numbers tho! does have a limit, that limit is something you will NOT reach (dont try flex, we know you dont have that much ram)
+BigInt a day keeps the overflow away.
 
-please stop reading this, i cant make READMEs 
+## What is BigInt?
 
-contributions ARE welcome, idc about style guides type shit
+BigInt is a library C++ library that
