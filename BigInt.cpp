@@ -15,7 +15,8 @@ struct BigInt {
 };
 
 char IntToDigt(int digit){
-        return ((char) digit) + 48;
+    if (digit < 0 || digit > 9) throw std::invalid_argument("Not a valid digit 0-9");
+    return '0' + digit;
 }
 
 void DisplayIntArr(unsigned int arr[], unsigned long long length){
