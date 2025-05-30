@@ -8,11 +8,11 @@ using std::cout;
 #define INT32_SIZE 4
 #define UINT32_SIZE 4294967295
 
-typedef struct{
-        unsigned int *ArrOfInts;
-        unsigned long long NumberOfDigits;
-        std::string representation;
-} BigInt;
+struct BigInt {
+    std::unique_ptr<uint32_t[]> digits;
+    unsigned int size;
+    unsigned int capacity;
+};
 
 char IntToDigt(int digit){
         return ((char) digit) + 48;
@@ -110,5 +110,5 @@ int main(){
         
 
 
-        return 69;
+        return 0;
 }
