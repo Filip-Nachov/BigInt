@@ -19,7 +19,7 @@ char IntToDigt(int digit){
     return '0' + digit;
 }
 
-void DisplayIntArr(unsigned int arr[], unsigned long long length){
+void DisplayIntArr(const unsigned int arr[], unsigned long long length){
         cout << "[";
         for (unsigned long long i = 0; i < length; i++){
                 cout << arr[i];
