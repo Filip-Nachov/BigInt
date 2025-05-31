@@ -34,18 +34,26 @@ bool IsOverflow(unsigned int Num1, unsigned int Num2){
     return Num2 > UINT32_MAX - Num1; 
 }
 
-void CreateBigint(BigInt* NumberAddress){
-        NumberAddress->ArrOfInts = (unsigned int *) malloc(INT32_SIZE);
-        NumberAddress->NumberOfDigits = 1;
-        NumberAddress->representation = "0";
-        NumberAddress->ArrOfInts[0] = 0;
+void CreateBigint(BigInt& nums) {
+    nums.capacity = 10;
+    nums.size = 0;
+    nums.digits = std::make_unique<uint32_t[]>(nums.capacity);
 }
 
-void SetBigIntVal(BigInt * PointerToNum, unsigned int Num){
-        free(PointerToNum->ArrOfInts);
-        PointerToNum->NumberOfDigits = 1;
-        PointerToNum->ArrOfInts = (unsigned int*) malloc(INT32_SIZE);
-        PointerToNum->ArrOfInts[0] = Num;
+void Resize(BigInt& bigInt, unsigned int newCapacity) {
+    std::unique_ptr<uint32_t[]> newDigits = std::make_unique<uint32_t[]>(newCapacity);
+    std::copy(bigInt.digits.get(), bigInt.digits.get() + bigInt.size, newDigits.get());
+    bigInt.digits = std::move(newDigits);
+    bigInt.capacity = newCapacity;
+}
+
+void SetBigIntVal(BigInt& nums, unsigned int num) {
+    if (nums.capacity == nums.size) {
+        nums.capacity += 10;
+        Resize(nums, nums.capacity);
+    }
+    nums.digits[nums.size] = num;
+    nums.size++;
 }
 
 int CmpNums(BigInt NumberOne,BigInt NumberTwo){
