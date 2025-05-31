@@ -56,7 +56,7 @@ void SetBigIntVal(BigInt& nums, unsigned int num) {
     nums.size++;
 }
 
-int CmpNums(BigInt NumberOne,BigInt NumberTwo){
+int CmpNums(const BigInt& NumberOne,const BigInt& NumberTwo){
         if (NumberOne.size < NumberTwo.size) { return -1; }
         else if (NumberOne.size > NumberTwo.size) { return 1; }
 
@@ -70,71 +70,34 @@ int CmpNums(BigInt NumberOne,BigInt NumberTwo){
         return 0;
 }
 
-BigInt AddNums(BigInt nums1, BigInt nums2) {
+BigInt AddNums(const BigInt& nums1, const BigInt& nums2) {
     BigInt result;
     result.capacity = std::max(nums1.size, nums2.size) + 1;
-    result.size = 0;
+    result.size = result.capacity;
     result.digits = std::make_unique<uint32_t[]>(result.capacity);
 
-    uint32_t carry = 0;
+    uint64_t carry = 0;
 
-    for (unsigned int i = 0; i < result.capacity - 1; i++) {
-        uint32_t a = (i < nums1.size) ? nums1.digits[i] : 0;
-        uint32_t b = (i < nums2.size) ? nums2.digits[i] : 0;
+    for (unsigned int i = 0; i < result.capacity; i++) {
+        uint64_t a = (i < nums1.size) ? nums1.digits[i] : 0;
+        uint64_t b = (i < nums2.size) ? nums2.digits[i] : 0;
 
-        uint64_t sum = static_cast<uint64_t>(a) + b + carry;
-        result.digits[i] = static_cast<uint32_t>(sum);
-        carry = (sum > UINT32_MAX); 
-        result.size++;
+        uint64_t sum = a + b + carry;
+        result.digits[i] = static_cast<uint32_t>(sum & 0xFFFFFFFF);
+        carry = sum >> 32;
     }
-
-    if (carry) {
-        result.digits[result.size++] = 1;
+    
+    while (result.size > 1 && result.digits[result.size - 1] == 0) {
+        result.size--;
     }
 
     return result;
 }
 
-
-void PrintBigintInfo(BigInt* NumberAddress){
-        cout << "Integer array = ";
-        DisplayIntArr(NumberAddress->ArrOfInts,NumberAddress->NumberOfDigits);
-        cout << "\nInteger array pointer = " << NumberAddress->ArrOfInts;
-        cout << "\n\nNumberOfDigits = " << NumberAddress->NumberOfDigits << "\n\nREPRESENTATION = " << NumberAddress->representation << '\n' << '\n';
+void PrintBigIntInfo(const BigInt& num) {
+    cout << "Digits: ";
+    DisplayIntArr(num.digits.get(), num.size);
+    cout << "Size: " << num.size << "\n";
+    cout << "Capacity: " << num.capacity << "\n";
 }
 
-int main(){
-        cout << "DISCLAIMER, USING 'SetBigIntVal' ONLY WORKS WHEN YOU PASS IN AN UNSIGNED INTEGER THAT FITS IN AN UNSIGNED INTEGER" << '\n' << '\n' << '\n';
-
-        BigInt TestNum;
-        BigInt TestNum2;
-        CreateBigInt(&TestNum);
-        CreateBigInt(&TestNum2);
-
-        SetBigIntVal(&TestNum,4250);
-        SetBigIntVal(&TestNum2,4250);
-
-        cout << "Expected result is 0, result is " << CmpNums(TestNum,TestNum2) << '\n';
-
-
-        SetBigIntVal(&TestNum,0);
-        SetBigIntVal(&TestNum2,0);
-
-
-        cout << "Expected result is 0, result is " << CmpNums(TestNum,TestNum2) << '\n';
-
-        SetBigIntVal(&TestNum,5);
-        SetBigIntVal(&TestNum2,10);
-        
-        cout << "Expected result is 1, result is " << CmpNums(TestNum,TestNum2) << '\n';
-        
-        SetBigIntVal(&TestNum,10);
-        SetBigIntVal(&TestNum2,5);
-
-
-        cout << "Expected result is -1, result is " << CmpNums(TestNum,TestNum2) << '\n';
-        
-
-
-        return 0;
-}
