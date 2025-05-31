@@ -34,7 +34,7 @@ bool IsOverflow(unsigned int Num1, unsigned int Num2){
     return Num2 > UINT32_MAX - Num1; 
 }
 
-void CreateBigint(BigInt& nums) {
+void CreateBigInt(BigInt& nums) {
     nums.capacity = 10;
     nums.size = 0;
     nums.digits = std::make_unique<uint32_t[]>(nums.capacity);
@@ -57,14 +57,17 @@ void SetBigIntVal(BigInt& nums, unsigned int num) {
 }
 
 int CmpNums(BigInt NumberOne,BigInt NumberTwo){
-        if (NumberOne.NumberOfDigits > NumberTwo.NumberOfDigits) { return -1; }
-        else if (NumberOne.NumberOfDigits < NumberTwo.NumberOfDigits) { return 1; }
+        if (NumberOne.size < NumberTwo.size) { return -1; }
+        else if (NumberOne.size > NumberTwo.size) { return 1; }
 
-        const unsigned long long NumberOfDigits = NumberOne.NumberOfDigits - 1;
+        const unsigned long long size = NumberOne.size - 1;
 
-        if (NumberOne.ArrOfInts[NumberOfDigits] == NumberTwo.ArrOfInts[NumberOfDigits]) { return 0; }
-        else if (NumberOne.ArrOfInts[NumberOfDigits] > NumberTwo.ArrOfInts[NumberOfDigits]) { return -1; }
-        else { return 1; }
+        for (int i = NumberOne.size - 1; i >= 0; i--) {
+            if (NumberOne.digits[i] < NumberTwo.digits[i]) return -1;
+            if (NumberOne.digits[i] > NumberTwo.digits[i]) return 1;
+        }
+
+        return 0;
 }
 
 BigInt AddNums(BigInt NumberOne,BigInt NumberTwo){
@@ -86,8 +89,8 @@ int main(){
 
         BigInt TestNum;
         BigInt TestNum2;
-        CreateBigint(&TestNum);
-        CreateBigint(&TestNum2);
+        CreateBigInt(&TestNum);
+        CreateBigInt(&TestNum2);
 
         SetBigIntVal(&TestNum,4250);
         SetBigIntVal(&TestNum2,4250);
