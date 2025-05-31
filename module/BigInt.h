@@ -17,6 +17,8 @@ int CmpNums(const BigInt& NumberOne, const BigInt& NumberTwo);
 BigInt AddNums(const BigInt& nums1, const BigInt& nums2);
 void PrintBigIntInfo(const BigInt& num);
 void DisplayIntArr(const unsigned int arr[], unsigned long long length);
+bool IsOverflow(unsigned int Num1, unsigned int Num2);
+void InttoDigt(int digit);
 
 #endif
 
