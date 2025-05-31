@@ -70,12 +70,31 @@ int CmpNums(BigInt NumberOne,BigInt NumberTwo){
         return 0;
 }
 
-BigInt AddNums(BigInt NumberOne,BigInt NumberTwo){
-        BigInt Result;
-        CreateBigint(&Result);
+BigInt AddNums(BigInt nums1, BigInt nums2) {
+    BigInt result;
+    result.capacity = std::max(nums1.size, nums2.size) + 1;
+    result.size = 0;
+    result.digits = std::make_unique<uint32_t[]>(result.capacity);
 
-        return Result;
+    uint32_t carry = 0;
+
+    for (unsigned int i = 0; i < result.capacity - 1; i++) {
+        uint32_t a = (i < nums1.size) ? nums1.digits[i] : 0;
+        uint32_t b = (i < nums2.size) ? nums2.digits[i] : 0;
+
+        uint64_t sum = static_cast<uint64_t>(a) + b + carry;
+        result.digits[i] = static_cast<uint32_t>(sum);
+        carry = (sum > UINT32_MAX); 
+        result.size++;
+    }
+
+    if (carry) {
+        result.digits[result.size++] = 1;
+    }
+
+    return result;
 }
+
 
 void PrintBigintInfo(BigInt* NumberAddress){
         cout << "Integer array = ";
