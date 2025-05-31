@@ -88,8 +88,8 @@ Please try to maintane the already existing coding style.
 
 ## Authors
 
-- [@UserNotFound](https://github.com/USER-NOT-FOUND-maker)
+- [@UserNotFound](https://github.com/USER-NOT-FOUND-maker) (started this repo)
 
-- [@FilipNachov](https://github.com/filip-nachov)
+- [@FilipNachov](https://github.com/filip-nachov) (rewrote the code and many files while keeping the same idea)
 
 
