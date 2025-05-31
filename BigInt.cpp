@@ -1,18 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <iostream>
-#include <bits/stdc++.h>
-#include <stdbool.h>
+#include "BigInt.h"
+#include <algorithm>
+#include <stdexcept>
 using std::cout;
 
 #define INT32_SIZE 4
 #define UINT32_SIZE 4294967295
-
-struct BigInt {
-    std::unique_ptr<uint32_t[]> digits;
-    unsigned int size;
-    unsigned int capacity;
-};
 
 char IntToDigt(int digit){
     if (digit < 0 || digit > 9) throw std::invalid_argument("Not a valid digit 0-9");
